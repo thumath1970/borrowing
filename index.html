@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8"/>
+	<meta http-equiv="refresh" content="180" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>東海應數借用歸還</title>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Let's Write"/>
+    <meta property="og:title" content="東海應數借用歸還"/>
+    <meta itemprop="name" content="東海應數借用歸還"/>
+    <meta name="description" content="東海應數借用歸還"/>
+    <meta property="og:description" content="東海應數借用歸還"/>
+    <meta itemprop="description" content="東海應數借用歸還"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="東海應數借用歸還"/>
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"/>
+    <link rel="stylesheet" href="dist/style.min.css"/>
+    <!--  Tag Manager-->
+  
+	<!--選擇日期-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<link rel="stylesheet" href="css/datetimepicker.css">
+  </head>
+	
+  <body>
+  <div class="container" id="app">
+	  <div class="double-wrap" :class="{ hide: !loading }">
+        <div class="double">
+          <div class="double-bounce1"></div>
+          <div class="double-bounce2"></div>
+        </div>
+      </div>
+      <!--<section class="kv w-640"><img src="" width="640" height="360" alt="主視覺"/></section>-->
+      <section class="form w-640">
+        <div class="text-center">
+          <h1>東海應數物品借用歸還</h1>
+          <h3><a href="https://docs.google.com/spreadsheets/d/1F-Aimfg9RuQg0HW_EHgCswquUxY4ZWLcAfL5iySfjcQ/edit?usp=sharing" target="_blank">物品歸還與借用狀況網頁</a></h3>
+    	</div>
+        
+		<div class="form-group">
+          <label for="main_id">請輸入學號或職員編號</label>
+          <input class="form-control" id="main_id" type="text" v-model="id" @input="limitIdLen(id)"/>
+        </div>
+		  
+		  
+        <div class="two-col">
+          <div class="col">
+            <div class="form-group">
+              <label for="name">姓名</label>
+              <div class="prepend">
+                <input class="form-control" id="name" type="text" v-model="person.name" disabled="disabled"/>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="userposition">借用者身份</label>
+              <input class="form-control" id="userposition" type="text" v-model="person.userposition" disabled="disabled"/>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input class="form-control" id="email" type="text" v-model="person.email" disabled="disabled"/>
+        </div>
+       
+		<div class="two-col">
+          <div class="col">
+			<div class="form-group">
+			  <label for="borrowitem">借用物品名稱</label>
+          	  <input class="form-control" id="borrowitem" type="text" v-model="person.borrowitem" :disabled="person.name == undefined"/>
+			</div>
+          </div>
+          <div class="col">
+			<div class="form-group">
+			  <label for="borrownum">借用數量</label>
+              <input class="form-control" id="borrownum" type="number" v-model="person.borrownum" :disabled="person.name == undefined"/>
+			</div>
+          </div>
+        </div>
+	 
+		<div class="two-col">
+          <div class="col">
+			<div class="form-group">
+			  <label for="borrowplace">借用地點</label>
+			  <input class="form-control" type="text" v-model="person.borrowplace" :disabled="person.name == undefined"/>
+			</div>
+          </div>
+          <div class="col">
+			<div class="form-group">
+				  <label for="returndate">歸還日期與時間</label>
+				  <input class="form-control" type="datetime-local" v-model="person.returndate" :disabled="person.name == undefined"/>
+			</div> 
+          </div>
+        </div>
+		  
+		<div class="form-group">
+			  <label for="purpose">用途</label>
+			  <input class="form-control" type="text" v-model="person.purpose" :disabled="person.name == undefined"/>
+		</div>
+		
+
+        <div class="submit"><a href="#" :class="{ disabled: person.name == undefined }" @click.prevent="submit">送出</a></div>
+		  
+		  
+		<div class="text-center">
+          <h4>© 2024 THU Math. All Rights Reserved.</h4>
+    	</div> 
+      </section>
+    </div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="dist/main.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+	<script src="/path/to/cdn/moment-with-locales.min.js"></script>
+	<script src="js/datetimepicker.js"></script>
+
+	<script>
+		jQuery($('#returnpicker').dateTimePicker({
+			dateFormat:"YYYY-MM-DD HH:mm"
+		}););
+	</script>
+
+  </body>
+</html>
